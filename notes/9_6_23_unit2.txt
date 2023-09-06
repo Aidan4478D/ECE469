@@ -1,0 +1,112 @@
+
+task environment = everything that there is to know about what the agent has to interact with and perform
+    - can classify task environments along various "dimensions"
+    
+        - fully observable vs partially observable:
+            - does the agent persieve everything that it can in its world
+        - deterministic vs stochastic (vs strategic)
+            - is there anything about the environment that is random
+            - strategic (there are other agents in the world, everything is determinstic other than what other agent is going to do)
+        - episodic vs sequential
+            - is agent making series of decisions based off of previous decisions (decisions are based off later states)
+        - static vs dynamic
+            - does task environment change as agent is thinking
+        - discrete vs continuous
+            - finite vs infinite number of choices
+        - single agent vs multi agent
+            - are there other agents and are they competitive, cooperitve, or mixed
+        - known vs unknown
+            - does the agent know everything there is to know about the task environment
+
+percept = everything agent senses in a moment in time
+
+types of agents:
+    - simple reflex agent
+        - each action depends only on current percept
+        - actions can be based on lookup table or determined by simple rules; randomness allowed
+    - model-based reflex agents
+        - keep track of parts of world they observe to handle partially observed environments
+        - maintain an internal state (ex. map)
+        - rely on transition model and sensor model
+    - goal based agents
+        - have goals describing desireable situations; search and planning used to achieve goal
+        - even when actions are same as model based or reflex agent, reasoning is philosophoically different
+    - utility based agent
+        - have a utility funcion that maps a state to a number indicating an associated degree of "happiness"
+        - looks to maximize "happiness"
+        - goals are binary
+
+agent representations:
+    - atomic representations = each state of world is indivisible (every state has a number and it knows what number its in)
+    - factored representations = each state is comprised of a fixed set of variables, or attributes, that each have values
+    - structured representations = each state includes set of objects and relationships that can be described
+
+    - localist representations = everything is represented in one place
+    - distributed representations = a concept or fact is spread over multiple locations
+        - localist can be more prone to error; distributed may be more robust
+
+
+--------------------------------------------------------------------------------------------------------------
+
+Unit 2: Simple Search
+
+- goal-based agent
+    - will search for sequence of actions that leads to goal state
+    - sequence of actions is said to be solution
+    - assume environment is single agent, fully observable, deterministic, statc, discrete, and known
+    - once you find path to goal, you can just take it/not listen to percepts
+
+- search problem
+    - initial state indicates state of agent's world at the start of the problem
+    - available actions function ACTIONS(s) returns set of actions applicable in a state s
+    - transition model function RESULT(s, a) returns state resulting from performing action a while in state s
+        - can call resulting state a successor of s
+    - goal states (tests) indicates what agent is trying to achieve
+    - action cost function ACTION_COST(s, a, s') gives the cost of applying action a at state s to reach state s'
+
+    - state space = set of all reachable states
+        - determined by initial state, set of all actions, and transition model
+        - some sources define state space more generally to be all plausible states
+        - non-reachable state is not part of the state space
+        - initial state is one member of the state space
+
+- toy problems = illustrate problem-solving methods
+    - discrete and easy to represent in software
+
+search trees and graphs
+    - search tree can be generated with intial state, available actions, and transition model
+    - if same state can be reached by multiple paths, it's moreso of a search graph
+    - node corresponding to initial state is root of tree
+    - gotta be careful of infinite loops in search implementations
+    - state is just one thing stored in a node
+        - node stores state, parent, action, and path cost
+    - multiple nodes can contain the same state
+
+
+expanding nodes
+    - expand a node by applying all possible legal actoins to generate new set of nodes
+    - frontier = collection of nodes that have been generated but not yet expanded
+    - each element of frontier is a leaf node of tree (if state space is tree)
+    - explored set = nodes that have already been expanded
+    - reached nodes = nodes in frontier and those that have already been explored
+        - includes all nodes that have been generated no matter if expanded or not
+
+
+considrations when evaluating search algorithms:
+    - completeness = is it guarenteed to find a solution
+    - optimality = if it finds a solution, is the solution guarenteed to be optimal
+    - time complexity = number of computational steps or nodes generated/expanded
+    - space complexity = memory requirements
+
+    - space and time are often considered to be based off of size of input
+
+    - complexity for problem can be expressed in terms of:
+        - branching factor, b = maximum number of successors of any node
+        - depth, d = depth of shallowest goal node
+        - maximum length, m = what is the biggest path in the tree (possibly infinite)
+
+
+
+
+
+
