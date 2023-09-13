@@ -1,0 +1,40 @@
+-------- advanced search --------
+
+informed search
+    - just finished looking at uninformed searches
+        - could distinguish goal states from non-goal states
+        - could not determine how close a non-goal state is to goal state
+
+    - informed search = one that uses problem-specific knowledge beyond the definition of the problem itself
+        - key component is a heuristic function, h(n)
+
+    - h(n) = estimated cost of the cheapeast path from the state at node n to a goal state
+
+
+greedy best-first search = tries to expand node closest to goal
+    - every time you have a decision, do what appears to be the best rn
+    - can be achieved using heuristic function and evaluation function
+
+    - in romania map problem, heuristic would be straight-line distance
+        - algorithm does not find optimal solution
+
+    - tree-search version doesn't check for repeated states thus isn't complete
+        - might oscillate back and forth between two states forever
+    - graph-search version is complete for finite spaces
+
+
+A* search = combines the path cost and heuristic
+    - path cost is not an estimate (exact cost from initial state from path to node)
+    - heuristic is an estimate of the remaining cost to any goal node
+
+    - f(n) = g(n) + h(n)
+        - path cost + heuristic
+
+    - can view f(n) as an estimated cost of the best path from the initial state, through the current node, to some goal node
+    
+    - complete for finite state spaces with non-negative action costs
+    - if h(n) satisfies certain conditions, A* is optimal
+        - only optimal is heuritic is admissible = never OVERestimates the cost to reach a goal
+        - tree search version is optimal if h(n) is admissible
+        - graph search version is optimal with admissible heuristic if paths to a repeated state with better costs are not discarded
+

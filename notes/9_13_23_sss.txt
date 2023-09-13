@@ -1,0 +1,80 @@
+
+breadth-first-search = expands the root, then all successors of root, then all their successors
+    - will find a goal state if its reachable
+    - will find the goal that can be reached in the fewest number of steps
+        - optimal for some problems (8 puzzle) but not others (romania map problem)
+    
+    - can be implemented using best-first search using node's depth as evaluation
+    - typically implemented as a regular queue
+        - as you generate nodes, you can immediately check if it's a goal state
+    
+    - is a complete search strategy (assuming finite branching factor)
+    - optimal only if shallowest goal node is optimal
+        - also if path cost is a non-decreasing function
+    - would run out of memory before time probably
+
+
+depth first search = expands the deepest node in the frontier
+    - would make priority queue behave like a stack
+    - implemented as a tree search using a regular stack as opposed to a priority queue
+    - "tree-like search" that does not track reached nodes but does track nodes on current path to avoid cycles
+    - must assume that children of each node are generated from right to left
+
+    - has a memorty requirement of O(bm)
+        - m is the maximum depth of tree
+    - generally not complete, is complete for finite state spaces if it avoids cycles
+    - if it does not keep track of nodes on current path, can get stuck in infinite loops
+
+    - generally NOT OPTIMAL
+
+
+depth-limited search = give the search a depth limit
+    - do a depth first search, but if you get down to depth L, back up and try something else
+    - choose cutoff limit based on problem
+        - often don't know the cutoff ahead of time
+    - can return goal state, failure, or cutoff
+        - failure = explored whole tree and no goal
+        - cutoff = it stopped searching as it got to level L at least once
+
+
+iterative deepening search = apply depth limited search over and over with increasing depth limits
+    - each stage will return solution, cutoff, or failure
+        - when returning solution or failure, you're done
+        - if it returns cutoff just go to the next stage
+    - combines benefits of DFS and BFS
+        - complete if there is finite branching factor
+        - is optimal if path cost is non-decreasing function of node depth
+        - has the memory requirements of dfs
+    
+    - although many states are generated multiple times, it's not very costly
+        - all repeated amount of calculation put together is an insignificant amount of time
+        - it generates the stages multiple times as the stage increasing
+
+    - perferred uninformed search method when search state space is larger than can fit in memory and depth of solution is not known
+
+
+bidirectional search = something that you add to the other strategies
+    - executes two searches simultaneously, one forward from initial state, and another backwards from goal state
+    - only possible to search if predecessors of a node are computable
+        - easy if all actions are reversable
+        - must check if each new node is already in other frontier
+    - optimal if there are uniform step costs
+
+
+
+sensorless problems = agent has no sensors
+    - up to now, have been assuming that the environment is fully obeservable
+    - some problems are not solvable, though some are using some sort of uninformed search
+    - set of states an agent may be in is a belief state
+    - to solve problems, agent must search in the space of belief states
+        - solution is path leading to belief state s.t. all members are goal states
+
+
+
+
+
+
+
+
+
+
