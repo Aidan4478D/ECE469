@@ -1,0 +1,65 @@
+
+
+alpha-beta pruning
+    - alpha = -infinity
+    - beta = infinity
+
+    - lets us skip entire segments of the game tree and is guarenteeing that it won't change the decision
+    - segments of tree are pruned when they are redundant
+
+    - returns the exact same move as minimax but more efficiently
+    - does not consider or even generate most nodes in the game tree
+        - alpha = value of the best choice for MAX
+        - beta = balue of the best choice for MIN
+
+
+transposition tables
+    - transpositions = permutations of moves that lead to the same position
+    - often leads to searching the same state over and over again
+    - hash table of positions evaluated up to a certain depth (with their evaluations) is called a transposition table
+        - allows you to aboid applying a search from the same state, to a specific depth, more than once
+
+updated utility funciton
+    - let definite wins be like 1000000 - depth of tree to win
+        - makes you get to the quickest win fastest
+
+searching exponentially big game trees
+    - terminal test is replaced by a cutoff test and the utility function is replaced by an evaluation function (heuristic function)
+    - heuristic functions for games approximate the level of goodness of a game position or for a partiuclar player
+
+    - when time limit is up, unwind from the current depth and whatever is the completed depth search is the one you work from
+
+
+heuristic function
+    - ideally should:
+        - order terminal states in the same order as the ultility function (crucial)
+        - order other states based on the "chances of winning"
+        - be fast
+    - compute numeric contributions for various manually constructed features and combine them for a total value
+    - some evlauation functions use a weighted linear function and can be expressed as:
+        - EVAL(s) = w1f1(s) + w2f2(s) + ... + wnfn(s)
+        - where w = the specific weight to each function
+    - heuristic must be zero-sum or it won't play well
+        - definite wins for MAX should get the highest weight
+        - definite wins for MIN should get the lowest weight
+        - draws should be evaluated as zero
+
+    - choice of features for an evaluation function is based on the implementers knowledge
+    - weights can either be manually set or empirically determined
+    - when applied to terminal states, the evlatuion function should compute to some multiple of the defined utlity of the state
+
+
+quiescent search
+    - positions that are quiescent are unlikely to exhibit wild swings in value in the near future
+        - like if the game seems to be a draw for a little bit but there could be an advantage in the future
+        - expands on non-quiescent positions until quiescent positions are found
+    - implemented by modifying IS-CUTOFF to return false for non-quiescent positions
+    - eliminates the horizon effect
+
+
+other potential improvements
+    - if a move seems to be clearly better than everything else, search that path deeper
+
+
+
+
