@@ -3,7 +3,7 @@ task environment = everything that there is to know about what the agent has to 
     - can classify task environments along various "dimensions"
     
         - fully observable vs partially observable:
-            - does the agent persieve everything that it can in its world
+            - does the agent percieve everything that it can in its world
         - deterministic vs stochastic (vs strategic)
             - is there anything about the environment that is random
             - strategic (there are other agents in the world, everything is determinstic other than what other agent is going to do)

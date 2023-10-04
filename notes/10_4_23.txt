@@ -1,0 +1,69 @@
+
+know all of the rules of checkers
+    - you have to make a jump if it's available
+    - if you double jump and it becomes a king after the first jump then the turn is over
+    - if you make a move and your opponent has no legal move, you win
+        - is possible for you to make a move that will result in you having no legal move but if your opponent has 
+
+    - don't have to make a GUI
+    - want ASCII interface to look nice
+        - aka add color and make squares
+        - don't overwrite board on screen
+
+on players turn list all the legal moves and number them
+    - then make the user type on a number in the legal moves
+
+ask who plays first (doesn't matter color)
+ask user for time limit in seconds (search time)
+
+allow user to load a position other than the starting position
+
+encourage research:
+    - what people say work well with what heuristics
+
+program should try to win quickly
+    - can win in two moves or six moves
+    - pass depth to heuristic which includes endgame positions
+    - instead of making a win be a +100000 make win +100000 - depth
+
+after every computer move, display updated board and time
+    - clock (calendar) time not CPU time
+    - should never take longer than time limit
+        - take move by last completed search
+    - if more than half the time is done, don't bother starting the next depth
+
+if only one move is available, it should take the move and not search
+if the search finished the whole game tree, it should stop the search   
+
+do as little dynamic memory as possible and use fixed size arrays
+
+player ahead should be trying to force trades
+player behind should be trying to avoid trades
+
+(# pieces player ahead) / (# pieces player behind) * c (constant) 
+when program is ahead add this, when behind subtract this
+
+
+debugging:
+    - if it's a search bug
+        - have it search a small depth and everytime you analyze a node, print out the number of tabs and some info
+            - like what is the computed minimax of the node
+            - depth limit, heuristic (score)
+            - output alpha and beta values and if there's a prune it'll say prune
+    - if it's not a search bug it might be a heuristic bug
+        - maybe not zero-sum
+        - maybe not doing things appropriately
+
+kings should be worth less a little bit less than double non-kings
+    - 5/3 of regular pieces
+    - keep the back row protected
+    - advance middle pieces as much as possible
+    - weight the main diagonals higher than others
+    - corners are really good
+    - edges are good but sometimes there are bad edge patterns
+
+    - endgames:
+        - kings are better on the main diagonal
+        - computer is behind, kings go to the double corner
+        - if enemy is in double corner, try to force them out and then the computer can see enough moves ahead to win
+
