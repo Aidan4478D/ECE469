@@ -1,0 +1,59 @@
+bayesian networks
+
+probability recap:
+    - probability = degree of belief that a proposition is true
+    - two types of probabilites:
+        - prior probabilities (unconditional) = probabilities known
+        - posteior probabilities (conditional) = change based on evidence; can define in terms of prior probabilities
+
+    - set of all possible worlds = sample space
+    - variables in probability theory are called random variables
+    - full joint probability distribution specifies probability for all possible combinations of all random variables used to describe an agent's world
+    - if all the random variables are discrete with finite domains, this can be specified by a table
+    - independence assumptions can greatly reduce # of probabilities that need to be specified for full joint distribution
+    - conditional indepence = more common than independence
+
+
+bayesian network
+    - graphical network for representing dependencies among random variables
+    - bayesian network is a directed graph such that:
+        - each node corresponds to a random variable
+        - if there is an arrow (link) from X to Y, X is said ot be a parent of Y
+            - node may have more than one parent
+        - graph has no directed cycles; is a DAG (directed acyclic graph)
+        - each node has a conditional probability distribution P(X(i) | Parents(X(i)))
+            - quantifies effect of the parents on the node
+
+conditional probability tables
+    - more complex bayesian networks may include conditional probability tables
+    - each row of a CPT indicattes the conditional probability distribution of the node (or random variable ir represents) for a conditioning case
+    - each conditional case represents a possible combination of values of the current node's parents
+    - only appropriate when the associated random variables are discrete with finite domains
+
+
+causal links
+    - causal link = link that is dependent on another assertion/variable
+    - important to assume in bayesian network that links are direct and causal
+    - implies that each node is conditionally independent of its predecessor given its parents
+    
+    - bayesian network constructed according to causality = a causal network
+    - causal networks (graphs) are important in the field of causal interference
+
+
+calculating probabilities using bayesian networks
+    - P(x1, x2, ..., xn) = Pi(i=1 -> n) P(xi | parents(xi))
+    - assuming that all direct casual links are present, every entry in the full joint distribution can be calculated from the information in a bayesian network
+    - if links are not casual, more links will be needed to make formula valid
+
+
+constructing a bayesian network
+    - example of a sparse system
+    - when choosing an order to add nodes (which represent random variables) possibly do:
+        - first add nodes representing root causes
+        - then add the variables that those nodes directly influence
+        - then add variables that the newer nodes directly influence, etc
+        - repeat process until you reach leaves which have no direct influence on anything else
+    - choosing the odering and the links is based on expert human knowledge of the dmain
+    - can be helpful to number the nodes using a topological sort (each cause preces all its effects)
+
+
