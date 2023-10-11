@@ -1,0 +1,135 @@
+probability
+    - many agents must act under uncertainty due to aprtial observability or non-determinism
+    - belief state of rational agent also specifies the probabilities of all possible world states
+
+probability theory
+    - knowledge can only provide degrees of belief
+    - probability of 0 or 1 represents "unequivocal belief" (true or false)
+    - all other probabilties lie between 0 and 1
+    - degrees of probabilties are different than degrees of truth
+
+    - set of all possible worlds = sample space
+        - sample space contains all possible configurations of an angent's environment
+        - possible worlds are mutually exclusive or exhaustive (now assume they form a discrete countable set)
+        - probability model assigns each possible world a probability between 0 and 1
+        - sum of probabilties assigned to each possible world = 1
+
+propositions
+    - assign degrees of belief to propositions = assertions that something is true
+    - think of a proposition as a declarative sentence expressed in a formal language
+        - either true or false but don't know with certainty
+        - proposition corresponds to an event containing the possible worlds
+
+
+    - before any evidence is obtained, there is unconditional probabiltiy = prior probability for any proposition
+        - example: P(Total = 11)
+    - after evidence is obtained that changes degree of belief, there is a conditional probability = posterior probabilty
+    - P(a | b) can be read as "the probability of a given b"
+    
+    - for any propositions a and b: P(a | b) = P(a ^ b) / P(b)
+    - can rewrite as product rule: P(a ^ b) = P(a | b) * P(b) 
+
+    - variables in probability theory are called random varoaibles:
+        - boolean random variable:
+            - domain is <true, false> 
+            - can abbreviate the proposition:
+                Cavity = true as cavity
+                Cavity = false as ~cavity
+        - discrete random variable:
+            - take on values from a countable domain
+                - ex. weather <sun, rain, cloud, snow>
+            - values in domain must be mutually exclusive and exhaustive
+            - discrete random variables can have infinite domains
+        - continuous random variables
+            - take on values that are real numbers
+            - can be the the entire real number line or an interval
+
+
+probability distributions
+    - want to express probabilities of all possible values of a random variable
+    - when dealing with a discrete random variable with a finite domain, can be expressed as a vector
+    
+    ex. P(weather = sun) = 0.6
+        P(weather = rain) = 0.1
+        P(weather = cloud) = 0.29
+        P(weather = snow) = 0.01
+
+    - defines probabilty distribution for the random variable weather
+    - probabiltiy distributions for discrete, finite domains are also called categorical distributions
+    - continues random variable, it is impossible to write out distribution as a vector
+        - express as a probability density function
+
+    - joint probability = probabilities of all possible combinations of values for a set of random variables
+    - full joint probability distribution specifies probabilityes for all combinations of all random variables used to describe world we are dealing with
+    - if all random variables are discrete with finite domains, then this can be specified by a table
+
+
+axioms of probability:
+    - all probabilites range from 0-1, inclusive
+    - sum of probabilites of all possible worlds = 1
+
+    - inclusing-exclusion principle: P(a v b) = P(a) + P(b) - P(a ^ b)
+        - (a ^ b) = a and b
+
+
+computing prior probabilities
+    - probability of a proposition = sum of probabilities of possible worlds
+    - leads to a simple method of computing the probability of any proposition given a full joing distribution
+    
+    - marginalization = summing up all probabilties of a row or column in a table
+
+
+probabilistic inference
+    - involves the computation of conditional probabilties for query propositions given observed evidence
+    - conditional probabilties are defined in terms or prior probabilties so these can also be computed from a full joint distribution
+
+
+normalization constant
+    - when deniminator is the same (both numerators are multiplied by 1/prob)
+    - capitalized tokens represent random variables, lowercase tokens represent abbreviations for propositions
+    - final step in computation is to compute normailzation constant or scale the values to sum to one
+
+
+general inference procedure
+    - let X be a single random variable for which we want to calculate the probability distribution given some observed evidecne
+    - let E be the set of evidence variables and e represent their observed values
+    - let Y represent remaining unobserved random variables
+    - can compute: P(X | e) = aP(X, e) = a * SUM(y -> Y) P(X, e, Y)
+
+    - easy if we have a full joint probability distribution in the form of a table but typically we dont
+    - if all random variables are Boolean, n random variables would have a space requirement of 2^n
+
+
+independence
+    - assertions are usually based on knowledge of the domain
+    - if a variable is independent of a different variable, the property is known as independence
+
+
+baye's rule
+    - P(b | a) = P(a | b) * P(b) / P(a)
+    - derived using product rule P(a ^ b) = P(b ^ a)
+
+        example: 
+            - disease meningitis causes patient to have a stiff neck in 70% = of cases
+            - ~ 1 in 50,000 have meningitis (prior probability)
+            - ~ 1 in 100 patients have stuff necks (also prior probability)
+
+            can express as P(s | m) = 0.7, P(m) = 1/50000, P(s) = 0.01
+
+            using bayes' rule, P(m | s) = P(s | m) * P(m) / P(s) = 0.7 * 1/50000 / 0.01 = 0.0014
+
+    - useful when you have esimates of right hand probabilities and need to estimate left-hang probability
+    - may know that a stiff neck implies meningitis 0.14% of the time = diagnostic knowledge
+    - diagnostic knowledge is often more fragile than casual knowledge
+
+    - probabilistic information is often available in the form P(effect | cause) and values are unlikely to change
+
+
+combining evidence
+    - 
+
+
+
+
+
+
