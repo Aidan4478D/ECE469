@@ -1,0 +1,66 @@
+stochastic processes
+    - will be considering stochastic processes in which the values of random variables change over time according to their probability distributions
+    - historically hidden Markov models (HMMs) have been successful in AI and ML to deal w such processes
+    - other methods of recurrent neural networks or trasnformers have performed better for most of these applications
+
+
+hidden markov models
+    - two very different depictions that are mathematically equivalent
+        - is a type of a baysien network
+
+
+markov ____
+    - markov property = holds if conditional probability distributions for future states of random variables given the current state and all past states, depends only on the current state
+        - when dealing with something with this property, if you wanna predict what's going to happen in the future, only consider state right now
+
+    - markov process = stochastic process that has the markov property
+
+    - markov model = markov assumption states that the system being modeled is a markov process
+
+    - let x be a random variable, and at every time unit t, the state (or value) of X is X(t)
+        - using textbook notation, can write: P(X(t) | X(0:t-1) = P(X(t) | X(t-1))
+            - if you know previous state, knowing previous states before that doesn't affect anything
+
+
+    - transition model for first-order markov processes, and probabilties defined above are sometimes referred to as transition probabilities
+
+    - generally assuming that the random variables and time steps are discrete, in which case processes are known as a markov chain
+ 
+
+dynamic bayesian networks
+    - bayesian network in which nodes represent random variables at different time steps
+    - although term "time steps" is commonly used, nodes can refer to steps of more general sequence
+    - all directed links in such a bayesian network will flow forward in time
+    - markov processes can easily be represented by dynamic bayesian network
+        - not true for the other way around
+    - not synonomous with HMMs 
+        - are actually more general
+
+
+hidden markov model
+    - used when the states of X cannot be ovserved directly but there are observable evidence based variable, denoted by E, that are dependent on the state
+    - can think of it of a sensor
+        - sensors can be represented by the observable evidence variables that depend on the current state
+    - Xs in this case are therefore often referred to as hidden variables
+
+    - assume conditional probability distribution of each evidence variable depends on;y on the current hidden state
+        - can write P(E(t) | X(0:t), E(1:t-1)) = P(E(t) | X(t))
+        - probabilities define above are sometimes called emission probabilities (output probabilities or observation likelihoods)
+
+    - probabilities P(X(t) | X(t-1)) are called transition probabilities
+
+    - two other assumptions when using HMMS are:
+        - hidden states are discrete with a finite domain
+        - various probability distributions do not change over time
+
+
+types of problems solved by HMMs
+    - three different types of problesm that can be solved using an HMM
+        1. determine probability of a particular output sequence (sequence of valeues for evidence variables) given parameters of HMM
+        2. determine most likely sequence of hidden states given an output sequence and parameters of an HMM
+        3. adjust parameters of an HMM, given an output sequence or set of output sequences (ex. training set) to make outputs more likely
+    - algorithms will cover for the first two tasks are both examples of dynamic programming algorithms
+    - third task is an example of a machine learning task
+
+
+

@@ -1,0 +1,36 @@
+machine learning notes!!!
+    - when an artifical agent such as a computer "learns," we call that machine learning (ML)
+    - an agent program implements an agent function that maps a percept sequence to an action
+    - goal of machine learning is to make some sort of improvement to an agent program
+
+    - improvements and techniques used to make them depends on multiple factors
+        - what type of agent (that the agent program is controlling) are we dealing with?
+        - what component of the agent program is being improved?
+        - what prior knowledge does the agent have?
+        - what model of the world is the agent using?
+        - what data is abailable to the agent
+        - what sort of feedback will the agent have access to as it acts?
+
+
+types of learning
+    - supervised learning = learning a funcion that maps inputs to outputs based on examples
+        - each example specifies one input and an output
+        - if the outputs are discrete and have a finite domain, this is called classification or categorization and each output can be called a label
+        - if the outputs have an infinite domain (either discrete or continouts) this is called regression
+
+    - unspervised learning = learning patterns in the input when there are no output values
+        - example of a such a task = clustering
+            - have a bunch of data and the goal is to put the data into each group 
+            - the data in each group is roughly similar to each other
+            - no specific categories in mind
+
+    - reinforcement learning = agent learns from reinforcements
+        - reinforcements can be thought as rewards and punishments
+        - agent must decide which of its actions were most responsible and update its agent program appropriately
+
+    - semi-supervised learning = given a relatively small number of labeled actions in addition to a much larger collection of unlabeled examples
+
+
+
+
+
