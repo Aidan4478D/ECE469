@@ -8,7 +8,9 @@
 #define BOARD_Y 8
 
 extern int board[BOARD_X][BOARD_Y]; 
-int printBoard(); 
+
+void initializeBoard(bool std_pos); 
+void printBoard(); 
 
 class Player {
 
