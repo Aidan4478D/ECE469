@@ -32,7 +32,8 @@ void initializeBoard(bool std_pos) {
 void printBoard() {
 
     //draw rows in board
-    cout << "  |--0--|--1--|--2--|--3--|--4--|--5--|--6--|--7--|\n"; 
+    cout << "     a     b     c     d     e     f     g     h   \n"; 
+    cout << "  |-----|-----|-----|-----|-----|-----|-----|-----|\n"; 
 
     for(int i = 0; i < BOARD_X; i++) {
         
@@ -41,7 +42,7 @@ void printBoard() {
 
         for(int j = 0; j < BOARD_Y; j++) {
 
-            //if on an odd square
+            //if on an odd square, make it gray
             if(board[i][j] == '!') {
                 
                 cout << "|" << "\033[90;100m     \033[0m";
@@ -55,24 +56,18 @@ void printBoard() {
             char piece = (char)board[i][j]; 
             
             //regular piece for player 1
-            if(piece == '1') {
-                cout << "\033[1;44m.\033[0m" << "  ";
-            }
+            if(piece == '1') cout << "\033[1;44m.\033[0m" << "  ";
+        
             //regular piece for player 2
-            else if(piece == '2') {
-                cout << "\033[1;41m.\033[0m" << "  ";
-            }
+            else if(piece == '2') cout << "\033[1;41m.\033[0m" << "  ";
+            
             //king for player 1
-            else if(piece == '3') {
-                cout << "\033[33;44m#\033[0m" << "  ";
-            }
+            else if(piece == '3') cout << "\033[33;44m#\033[0m" << "  ";
+            
             //king for player 2
-            else if(piece == '4') {
-                cout << "\033[33;41m#\033[0m" << "  ";
-            }
-            else {
-                cout << piece << "  ";
-            }
+            else if(piece == '4') cout << "\033[33;41m#\033[0m" << "  ";
+
+            else cout << piece << "  ";
             
             //add wall at end
             if(j == BOARD_Y - 1) cout << "|"; 

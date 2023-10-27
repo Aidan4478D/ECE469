@@ -1,11 +1,14 @@
-playGame.exe: playGame.o boardLogic.o
-	g++ -o playGame.exe playGame.o boardLogic.o
+playGame.exe: playGame.o boardLogic.o playerLogic.o
+	g++ -o playGame.exe playGame.o boardLogic.o playerLogic.o
 
 playGame.o: playGame.cpp
 	g++ -c playGame.cpp
 
-board_logic.o: boardLogic.cpp boardLogic.h
+boardLogic.o: boardLogic.cpp boardLogic.h
 	g++ -c boardLogic.cpp
+
+playerLogic.o: playerLogic.cpp playerLogic.h boardLogic.h 
+	g++ -c playerLogic.cpp
 
 clean:
 	rm -f *.exe *.o *.stackdump *~

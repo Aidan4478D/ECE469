@@ -1,9 +1,11 @@
-#include "boardLogic.h"
 #include <fstream> 
 #include <iostream> 
 #include <string>
-
 #include <algorithm> 
+
+#include "boardLogic.h"
+#include "playerLogic.h"
+
 using namespace std; 
  
 
@@ -67,10 +69,19 @@ void initialActions() {
 
 
 int main() {
+    
+    bool gameOver = false;
+
+    //set player to be player 1
+    TURN player = COMPUTER; 
 
     //initialize board with all zeros
     initialActions(); 
+    
+    while(!gameOver) {
+        printBoard(); 
+        makeMove(&player);        
+    }
 
-    printBoard(); 
     return 0; 
 }
