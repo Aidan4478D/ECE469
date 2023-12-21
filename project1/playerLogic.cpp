@@ -63,12 +63,9 @@ vector<vector<tuple<char, int, bool>>> legalMoves(TURN player) {
     
     //theres probably a better way to implement this
     //player 1
-    if (player == COMPUTER) {
-        pieces[0] = '1'; pieces[1] = '3'; 
-    }
-    else {
-        pieces[0] = '2'; pieces[1] = '4'; 
-    }
+    if (player == COMPUTER) { pieces[0] = '1'; pieces[1] = '3'; } 
+    else { pieces[0] = '2'; pieces[1] = '4'; }
+    
 
     //look through all of the pieces on the board
     for(int i = 0; i < BOARD_X; i++) {
@@ -78,15 +75,15 @@ vector<vector<tuple<char, int, bool>>> legalMoves(TURN player) {
             //now look at the available moves for the current piece
             if(board[i][j] == pieces[0] || board[i][j] == pieces[1]) {
                 
-                bool legal_move_found = false;  
-                vector<vector<int>> legal_squares;
-                vector<tuple<char, int, bool>> move_sequence; 
-
                 //get starting index bounds for each move
                 int start_index_x = (i - 1) < 0 ? 0 : i - 1;
                 int start_index_y = (j - 1) < 0 ? 0 : j - 1;
                 int end_index_x = (i + 1) > (BOARD_Y) ? (BOARD_Y) : i + 1;
                 int end_index_y = (j + 1) > (BOARD_X) ? (BOARD_X) : j + 1;
+
+                //if standard piece, don't search for moves backwards
+                if(player == COMPUTER && board[i][j] == '1') start_index_x = end_index_x;
+                if(player == USER && board[i][j] == '2') end_index_x = start_index_x; 
 
                 
                 //find valid moves given the player's piece
@@ -100,41 +97,23 @@ vector<vector<tuple<char, int, bool>>> legalMoves(TURN player) {
                         //add to thing
                         //if already in the thing stop
                         
+                        //cout << "\nlegal move is found! from i = " << i << ", j = " << j << ", at x = " << k << " and y = " << l; 
+                        //cout << "\nstart x is " << start_index_x << " end x is " << end_index_x << "\n";
+                        //cout << "start y is " << start_index_y << " end y is " << end_index_y << "\n";
                         
                         //space represents empty black square
+                        //any black square seen by a piece (forwards) is a legal move
                         if (board[k][l] == ' ') {
-                            legal_squares.push_back({k, l});
-                            legal_move_found = true;
                             
-                            tile_t start = {};
-                            start.x = i;
-                            start.y = j;
-            
-
-                            tile_t end = {};
-                            end.x = k;
-                            end.y = l;
+                            //initialize tile structs
+                            tile_t start = {i, j};  
+                            tile_t end = {k, l};
                             
-
-                            cout << "\nlegal move is found! from i = " << i << ", j = " << j << ", at x = " << k << " and y = " << l; 
-                            //cout << "\nstart x is " << start_index_x << " end x is " << end_index_x << "\n";
-                            //cout << "start y is " << start_index_y << " end y is " << end_index_y << "\n";
                             moves.push_back(createMoveset(start, end)); 
                         }
                     }
                 }
-                
-                
-
-                //add starting square to the start of the move sequence
-                /*
-                if(legal_move_found) {
-
-                    moves.push_back(move_sequence); 
-                }*/
-
             }
-
         }
     }
 
@@ -148,7 +127,7 @@ void printLegalMoves(TURN player) {
 
     vector<vector<tuple<char, int, bool>>> moves = legalMoves(player); 
     
-    cout << "\nSelect your move: (0-" << moves.size() << ")\n\n";  
+    cout << "\nSelect your move: (0-" << moves.size() - 1 << ")\n\n";  
 
     for(int i = 0; i < moves.size(); i++) {
 
@@ -163,7 +142,6 @@ void printLegalMoves(TURN player) {
             tuple<char, int, bool> square = move_sequence[j];
             
             cout << get<0>(square) << get<1>(square);
-
             j == move_sequence.size() - 1 ? cout << "\n" : cout << " -> "; 
         }
         //cout << "\n"; 
@@ -180,9 +158,11 @@ void makeMove(TURN *player) {
     cout << "\n\nIt is Player " << p_num << "'s turn!";
     printLegalMoves(*player); 
     
+    cout << "\nMove I want is: "; 
     int move = 0; 
     cin >> move; 
-
+    
+    //change player after each turn
     p_num == COMPUTER ? *player = USER : *player = COMPUTER; 
 }   
 
