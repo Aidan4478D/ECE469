@@ -35,6 +35,7 @@ typedef struct tile_s {
  */
 
 
+//create a moveset
 vector<tuple<char, int, bool>> createMoveset(tile_t start, tile_t end) {
     
     vector<tuple<char, int, bool>> sequence; 
@@ -53,18 +54,45 @@ vector<tuple<char, int, bool>> createMoveset(tile_t start, tile_t end) {
 }
 
 
+//function that checks if the jump you're trying to make works out
+bool checkValidJump(tile_t start, tile_t end) {
+    
+    int d_hor = 0, d_vert = 0; 
+
+    (start.y < end.y) ? ++d_hor : --d_hor; //horizontal movement
+    (start.x < end.x) ? ++d_vert : --d_vert; //vertical movement
+
+    int new_y = start.y + d_hor;
+    int new_x = start.x + d_vert; 
+
+    //new square is invalid if:
+    //  1. check square is outside bounds of matrix
+    //  2. check square is already filled with a different piece
+    //otherwise it should be good?
+    
+
+    if(new_y < 0 || new_y > BOARD_Y) return false;
+    if(new_x < 0 || new_x > BOARD_X) return false;
+
+    if(board[new_x][new_y] != ' ') return false; 
+
+    return true; 
+}
+
+
 vector<vector<tuple<char, int, bool>>> legalMoves(TURN player) {
 
     //int starting_index_x, starting_index_y, ending_index_x, ending_index_y; 
     //letter, number, forced move boolean
     vector<vector<tuple<char, int, bool>>> moves;
 
-    char pieces[2]; 
+    //first two pieces are team, next two are enemy
+    char pieces[4];
     
     //theres probably a better way to implement this
     //player 1
-    if (player == COMPUTER) { pieces[0] = '1'; pieces[1] = '3'; } 
-    else { pieces[0] = '2'; pieces[1] = '4'; }
+    if (player == COMPUTER) { pieces[0] = '1'; pieces[1] = '3'; pieces[2] = '2'; pieces[3] = '4'; }
+    else { pieces[0] = '2'; pieces[1] = '4'; pieces[2] = '1'; pieces[3] = '3'; }
     
 
     //look through all of the pieces on the board
@@ -75,13 +103,13 @@ vector<vector<tuple<char, int, bool>>> legalMoves(TURN player) {
             //now look at the available moves for the current piece
             if(board[i][j] == pieces[0] || board[i][j] == pieces[1]) {
                 
-                //get starting index bounds for each move
+                //get index bounds for each move
                 int start_index_x = (i - 1) < 0 ? 0 : i - 1;
                 int start_index_y = (j - 1) < 0 ? 0 : j - 1;
                 int end_index_x = (i + 1) > (BOARD_Y) ? (BOARD_Y) : i + 1;
                 int end_index_y = (j + 1) > (BOARD_X) ? (BOARD_X) : j + 1;
 
-                //if standard piece, don't search for moves backwards
+                //if standard piece, don't search for backwards moves
                 if(player == COMPUTER && board[i][j] == '1') start_index_x = end_index_x;
                 if(player == USER && board[i][j] == '2') end_index_x = start_index_x; 
 
@@ -101,15 +129,22 @@ vector<vector<tuple<char, int, bool>>> legalMoves(TURN player) {
                         //cout << "\nstart x is " << start_index_x << " end x is " << end_index_x << "\n";
                         //cout << "start y is " << start_index_y << " end y is " << end_index_y << "\n";
                         
+                        char check = board[k][l]; 
+
                         //space represents empty black square
                         //any black square seen by a piece (forwards) is a legal move
-                        if (board[k][l] == ' ') {
+                        if (check == ' ') {
                             
                             //initialize tile structs
                             tile_t start = {i, j};  
                             tile_t end = {k, l};
                             
                             moves.push_back(createMoveset(start, end)); 
+                        }
+                        
+                        //if upcoming square is owned by an enemy
+                        if(check == pieces[2] || check == pieces[3]) {
+                            
                         }
                     }
                 }
