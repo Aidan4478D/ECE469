@@ -1,5 +1,5 @@
 playGame.exe: playGame.o boardLogic.o playerLogic.o
-	g++ -o playGame.exe playGame.o boardLogic.o playerLogic.o
+	g++ -o playGame.exe playGame.o boardLogic.o playerLogic.o -g
 
 playGame.o: playGame.cpp
 	g++ -c playGame.cpp
@@ -18,3 +18,8 @@ backup:
 	cp *.cpp backups
 	cp *.h backups
 	cp Makefile backups
+
+.PHONY: rebuild
+rebuild:
+	$(MAKE) clean
+	$(MAKE) all
