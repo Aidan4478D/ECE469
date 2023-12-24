@@ -55,7 +55,7 @@ vector<tuple<char, int, bool>> createMoveset(tile_t start, tile_t end) {
 
 
 //function that checks if the jump you're trying to make works out
-bool checkValidJump(tile_t start, tile_t end) {
+bool checkValidJump(tile_t start, tile_t end, tile_t *result_t) {
     
     int d_hor = 0, d_vert = 0; 
 
@@ -75,6 +75,8 @@ bool checkValidJump(tile_t start, tile_t end) {
     if(new_x < 0 || new_x > BOARD_X) return false;
 
     if(board[new_x][new_y] != ' ') return false; 
+
+    *result_t = {new_x, new_y};
 
     return true; 
 }
@@ -129,21 +131,25 @@ vector<vector<tuple<char, int, bool>>> legalMoves(TURN player) {
                         //cout << "\nstart x is " << start_index_x << " end x is " << end_index_x << "\n";
                         //cout << "start y is " << start_index_y << " end y is " << end_index_y << "\n";
                         
+                        //initialize tile structs
                         char check = board[k][l]; 
+                        tile_t start = {i, j};  
+                        tile_t end = {k, l};
 
                         //space represents empty black square
                         //any black square seen by a piece (forwards) is a legal move
-                        if (check == ' ') {
-                            
-                            //initialize tile structs
-                            tile_t start = {i, j};  
-                            tile_t end = {k, l};
-                            
-                            moves.push_back(createMoveset(start, end)); 
-                        }
+                        if (check == ' ') moves.push_back(createMoveset(start, end)); 
                         
                         //if upcoming square is owned by an enemy
                         if(check == pieces[2] || check == pieces[3]) {
+                            
+                            //if the jump isn't valid, skip this iteration
+                            tile_t result_t = {}; 
+                            if(!checkValidJump(start, end, &result_t)) continue; 
+
+                            vector<tile_t> frontier; 
+                            frontier.push_back(result_t); 
+
                             
                         }
                     }
