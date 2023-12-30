@@ -12,11 +12,16 @@ typedef enum {
   USER = 2
 } TURN;
 
+typedef struct tile_s {
+    int x;
+    int y;
+} tile_t; 
+
 
 //first vector = vector of total move sequences
 //second vector = vector of tuples that make up move sequence
 //tuple = individual square
-vector<vector<tuple<char, int, bool>>> legalMoves(TURN player); 
+vector<vector<tuple<tile_t, bool>>> legalMoves(TURN player); 
 
 //prints the legal moves
 void printLegalMoves(TURN player); 
